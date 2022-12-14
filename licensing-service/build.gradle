@@ -2,6 +2,7 @@ plugins {
 	id 'java'
 	id 'org.springframework.boot' version '2.7.6'
 	id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+	id "com.palantir.docker" version "0.25.0"
 }
 
 group = 'basic'
@@ -24,6 +25,14 @@ dependencies {
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+docker {
+	name "sungjin0757/licensing-service:${project.version}"
+	dockerfile file('./docker/Dockerfile')
+	files ([tasks.bootJar.outputs.files, file('./docker/run.sh')])
+	buildArgs(['JAR_FILE': tasks.bootJar.outputs.files.singleFile.name])
+	noCache true
 }
 
 tasks.named('test') {
