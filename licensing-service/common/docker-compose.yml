@@ -1,0 +1,6 @@
+version: '2'
+services:
+  licensingservice:
+    image: sungjin0757/licensing-service:0.0.1-SNAPSHOT
+    ports:
+      - "8080:8080"
